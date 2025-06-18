@@ -9,10 +9,326 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      answers: {
+        Row: {
+          answer_text: string
+          created_at: string | null
+          id: number
+          question_id: number | null
+        }
+        Insert: {
+          answer_text: string
+          created_at?: string | null
+          id?: number
+          question_id?: number | null
+        }
+        Update: {
+          answer_text?: string
+          created_at?: string | null
+          id?: number
+          question_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      class_quizzes: {
+        Row: {
+          assigned_at: string | null
+          class_id: string
+          due_date: string | null
+          id: string
+          quiz_id: number
+        }
+        Insert: {
+          assigned_at?: string | null
+          class_id: string
+          due_date?: string | null
+          id?: string
+          quiz_id: number
+        }
+        Update: {
+          assigned_at?: string | null
+          class_id?: string
+          due_date?: string | null
+          id?: string
+          quiz_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_quizzes_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_quizzes_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_dashboard"
+            referencedColumns: ["class_id"]
+          },
+          {
+            foreignKeyName: "class_quizzes_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classes: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          teacher_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          teacher_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          teacher_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classes_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_dashboard"
+            referencedColumns: ["teacher_id"]
+          },
+          {
+            foreignKeyName: "classes_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      questions: {
+        Row: {
+          correct_answer: string
+          created_at: string | null
+          id: number
+          question_text: string
+          quiz_id: number | null
+        }
+        Insert: {
+          correct_answer: string
+          created_at?: string | null
+          id?: number
+          question_text: string
+          quiz_id?: number | null
+        }
+        Update: {
+          correct_answer?: string
+          created_at?: string | null
+          id?: number
+          question_text?: string
+          quiz_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quizzes: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          difficulty: string | null
+          id: number
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
+          id?: number
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          difficulty?: string | null
+          id?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      teachers: {
+        Row: {
+          address: string | null
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          email: string
+          id: string
+          join_date: string | null
+          name: string
+          phone: string | null
+          subjects: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email: string
+          id?: string
+          join_date?: string | null
+          name: string
+          phone?: string | null
+          subjects?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          join_date?: string | null
+          name?: string
+          phone?: string | null
+          subjects?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          completed_at: string | null
+          id: number
+          quiz_id: number | null
+          score: number | null
+          user_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: number
+          quiz_id?: number | null
+          score?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          id?: number
+          quiz_id?: number | null
+          score?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_dashboard"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "user_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          class_id: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          level: number | null
+          name: string | null
+          total_points: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          class_id?: string | null
+          created_at?: string | null
+          email?: string | null
+          id: string
+          level?: number | null
+          name?: string | null
+          total_points?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          class_id?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          level?: number | null
+          name?: string | null
+          total_points?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "users_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_dashboard"
+            referencedColumns: ["class_id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      teacher_dashboard: {
+        Row: {
+          average_score: number | null
+          class_id: string | null
+          class_name: string | null
+          level: number | null
+          quizzes_attempted: number | null
+          student_id: string | null
+          student_name: string | null
+          teacher_id: string | null
+          teacher_name: string | null
+          total_points: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

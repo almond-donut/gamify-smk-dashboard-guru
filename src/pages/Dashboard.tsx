@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Users, FileText, BarChart, Settings, User, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { ThemeToggle } from '@/components/theme-toggle';
 import DashboardOverview from '@/components/dashboard/DashboardOverview';
 import StudentsManagement from '@/components/dashboard/StudentsManagement';
 import QuizManagement from '@/components/dashboard/QuizManagement';
@@ -43,7 +44,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 
@@ -53,11 +54,11 @@ const Dashboard = () => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        <div className="flex items-center justify-between h-16 px-6 border-b">
-          <h1 className="text-xl font-bold text-gray-900">SMK Dashboard</h1>
+        <div className="flex items-center justify-between h-16 px-6 border-b dark:border-gray-700">
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white">SMK Dashboard</h1>
           <Button
             variant="ghost"
             size="icon"
@@ -81,8 +82,8 @@ const Dashboard = () => {
                   }}
                   className={`w-full flex items-center px-3 py-2 text-left rounded-lg mb-1 transition-colors ${
                     activeTab === item.id
-                      ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-700'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 border-l-4 border-blue-700 dark:border-blue-500'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
                   <Icon className="h-5 w-5 mr-3" />
@@ -97,7 +98,7 @@ const Dashboard = () => {
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b h-16 flex items-center px-4 lg:px-6">
+        <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700 h-16 flex items-center px-4 lg:px-6">
           <Button
             variant="ghost"
             size="icon"
@@ -109,13 +110,14 @@ const Dashboard = () => {
           
           <div className="flex-1 flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {navigationItems.find(item => item.id === activeTab)?.label}
               </h2>
             </div>
             
             <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-500">
+              <ThemeToggle />
+              <div className="text-sm text-gray-500 dark:text-gray-400">
                 Welcome back, Teacher!
               </div>
               <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -126,7 +128,7 @@ const Dashboard = () => {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-4 lg:p-6 overflow-auto">
+        <main className="flex-1 p-4 lg:p-6 overflow-auto bg-gray-50 dark:bg-gray-900">
           {renderContent()}
         </main>
       </div>
